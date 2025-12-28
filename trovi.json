@@ -1,25 +1,49 @@
 {
-  "name": "Reproduction of Dynamic Data Layout Optimization with Worst-case Guarantees (OREO)",
-  "description": "Independent reproduction of the experiments from the paper 'Dynamic Data Layout Optimization with Worst-case Guarantees'.",
-  "authors": [
-    {
-      "name": "Dhian Juwita Putri",
-      "role": "Reproducer"
-    }
-  ],
-  "original_paper": {
-    "title": "Dynamic Data Layout Optimization with Worst-case Guarantees",
-    "authors": [
-      "Kexin Rong",
-      "Paul Liu",
-      "Sarah Ashok Sonje",
-      "Moses Charikar"
-    ],
-    "url": "https://arxiv.org/abs/2405.04984"
-  },
-  "tags": [
-    "experiment"
-  ],
-  "artifact_type": "reproduction"
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@id": "./",
+            "@type": "Dataset",
+            "actionApplication": [
+                {
+                    "@id": "#ChameleonJupyterLab"
+                }
+            ],
+            "author": [
+                {
+                    "@id": "#author_0"
+                }
+            ],
+            "datePublished": "2025-12-28T07:22:45+00:00",
+            "description": "Independent reproduction of the experiments and analyses presented in the paper *Dynamic Data Layout Optimization with Worst-case Guarantees*, conducted on Chameleon Cloud infrastructure. All original ideas and theoretical contributions belong to the original authors.",
+            "disambiguatingDescription": "Reproduction of OREO experiments with worst-case guarantees",
+            "keywords": "experiment",
+            "name": "Reproduction of Dynamic Data Layout Optimization with Worst-case Guarantees"
+        },
+        {
+            "@id": "trovi.json",
+            "@type": "CreativeWork",
+            "about": {
+                "@id": "./"
+            },
+            "conformsTo": {
+                "@id": "https://w3id.org/ro/crate/1.1"
+            }
+        },
+        {
+            "@id": "#author_0",
+            "@type": "Person",
+            "affiliation": "Krida Wacana Christian University",
+            "email": "dhixerz@gmail.com",
+            "name": "Dhian Juwita Putri"
+        },
+        {
+            "@id": "#ChameleonJupyterLab",
+            "@type": "SoftwareApplication",
+            "name": "Chameleon JupyterLab",
+            "trovi_arguments": "{}",
+            "trovi_type": "jupyterhub",
+            "url": "https://jupyter.chameleoncloud.org/"
+        }
+    ]
 }
-
