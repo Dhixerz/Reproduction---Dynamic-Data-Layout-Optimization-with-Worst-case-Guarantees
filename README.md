@@ -3,6 +3,15 @@ Authors: Kexin Rong, Paul Liu, Sarah Ashok Sonje, Moses Charikar
 
 Paper link: https://arxiv.org/abs/2405.04984
 
+Paper link: https://arxiv.org/abs/2405.04984
+
+## Reproduction note
+This repository contains an independent reproduction of the experiments and analyses presented in the paper, conducted as part of a reproduction study by **Dhian Juwita Putri**.  
+All original ideas, methods, and theoretical contributions belong to the original authors.
+
+## Environment setup
+Run ```pip3 install -r requirements.txt``` to setup the required Python3 dependencies.
+
 ## Environment setup
 Run ```pip3 install -r requirements.txt``` to setup the required Python3 dependencies.
 
