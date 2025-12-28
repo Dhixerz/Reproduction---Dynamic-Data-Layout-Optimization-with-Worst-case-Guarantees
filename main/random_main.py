@@ -6,6 +6,7 @@ from online.counter import *
 import numpy as np
 import argparse
 import os
+import pickle
 
 
 def run_random(fname, k, output_dir, N=3):
@@ -20,13 +21,18 @@ def run_random(fname, k, output_dir, N=3):
         sg.reset_reservoir(args.res)
         cm = CounterManager(sg, alpha, args.gamma, args.lag)
 
-    # Run randomized algorithm
+        # Run randomized algorithm
         for i in range(T):
             new_queries = queries[i * args.interval:(i + 1) * args.interval]
             cm.process_queries(new_queries)
+  
+        avg_states = np.average(cm.num_states) if len(cm.num_states) > 0 else 0
+        max_states = max(cm.num_states) if len(cm.num_states) > 0 else 0
+        avg_removed = np.average(cm.num_removed) if len(cm.num_removed) > 0 else 0
+
         print("q: %f, m: %f" % (cm.query_cost, cm.movement_cost))
         print("Avg #states: %f (max: %d), avg removed: %f" % (
-            np.average(cm.num_states), max(cm.num_states), np.average(cm.num_removed)))
+            avg_states, max_states, avg_removed))
 
         query.append(cm.query_cost)
         movement.append(cm.movement_cost)
@@ -37,8 +43,16 @@ def run_random(fname, k, output_dir, N=3):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Random.')
     parser.add_argument('--config', default="demo", help="Config File Path")
-    args = Args(parser.parse_args().config)
-    # Fix the random seeds for our experiments
+
+    parser.add_argument('--k', type=int, default=None, help="Override partition count k")
+    
+    parsed_args = parser.parse_args()
+    args = Args(parsed_args.config)
+ 
+    if parsed_args.k is not None:
+        print(f"k {args.k} to {parsed_args.k}")
+        args.k = parsed_args.k
+
     np.random.seed(args.seed)
     np.seterr(invalid='ignore')
     alpha = args.alpha
@@ -53,10 +67,13 @@ if __name__ == "__main__":
     total_size = 0
     for i, fname in enumerate(fnames):
         print(fname)
-        df, df_sample, k = get_data(config, args, parts, files[i], fname)
+     
+        df, df_sample, _ = get_data(config, args, parts, files[i], fname)
+        k = args.k  
+
         N = len(df)
         output_dir = "%s/%s-%s-%d-%d-%s" % (config["ds"], fname, args.q, args.interval, k, args.method)
-        # Run randomized algorithm
+
         schedule, query, movement = run_random(fname, k, output_dir, 1)
 
         total_size += N
@@ -75,7 +92,3 @@ if __name__ == "__main__":
     print("[Random (%s,%d)] Query: %f, Movement: %f" % (
         args.policy, args.interval, total_query / total_size, total_movement / total_size))
     print("Total size: %d" % total_size)
-
-
-
-

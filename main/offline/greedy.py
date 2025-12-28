@@ -428,6 +428,11 @@ class QDTree(Layout):
         self.path = path
 
     def load_by_path(self, path):
+        # --- TAMBAHAN FIX START ---
+        if path.endswith("-label"):
+            path = path.replace("-label", "")
+        # --- TAMBAHAN FIX END ---
+
         tree_info = pickle.load(open(path, "rb"))
         root, pid = build_tree(tree_info, self.df, self.cfg)
         self.root = root

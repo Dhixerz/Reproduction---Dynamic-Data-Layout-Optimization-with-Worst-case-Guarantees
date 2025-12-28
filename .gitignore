@@ -1,0 +1,8 @@
+# Keep datasets folder, ignore its contents
+datasets/*
+!datasets/.gitkeep
+
+# Ignore python cache
+__pycache__/# Ignore generated files
+__pycache__/
+datasets/

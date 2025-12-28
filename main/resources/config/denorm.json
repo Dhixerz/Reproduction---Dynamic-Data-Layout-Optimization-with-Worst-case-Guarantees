@@ -15,5 +15,5 @@
   "date_format": "%Y-%m-%d",
   "ds": "tpch",
   "delimiter": ",",
-  "path": "/mnt/1/datasets/denorm/"
+  "path": "/home/cc/oreo/main/datasets/denorm/"
 }

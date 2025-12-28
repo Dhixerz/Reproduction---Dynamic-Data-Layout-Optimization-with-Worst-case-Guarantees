@@ -35,7 +35,17 @@ def compute_and_eval(df, df_sample, ds, args, k, queries):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Static baseline.')
     parser.add_argument('--config', default="demo", help="Config File Path")
-    args = Args(parser.parse_args().config)
+    # MODIFICATION: Add argument for k
+    parser.add_argument('--k', type=int, default=None, help="Override partition count k")
+
+    parsed_args = parser.parse_args()
+    args = Args(parsed_args.config)
+    
+    # MODIFICATION: Override k globally if provided
+    if parsed_args.k is not None:
+        print(f"OVERRIDE: Changing k from {args.k} to {parsed_args.k}")
+        args.k = parsed_args.k
+
     # Fix the random seeds for our experiments
     np.random.seed(args.seed)
 
@@ -48,7 +58,10 @@ if __name__ == "__main__":
     skipped = 0
     size = 0
     for i, fname in enumerate(fnames):
-        df, df_sample, k = get_data(config, args, parts, files[i], fname)
+        # MODIFICATION: Capture original k as dummy variable '_' to prevent overwriting
+        df, df_sample, _ = get_data(config, args, parts, files[i], fname)
+        k = args.k # Force usage of the overridden k
+        
         outfile = "%s-%s" % (config["ds"], fnames[i])
         read, N, schedule = compute_and_eval(df, df_sample, outfile, args, k, queries)
         skipped += (1 - read) * N
@@ -59,5 +72,3 @@ if __name__ == "__main__":
     skipped = skipped / size
     print("[%s offline] skipped: %.3f, total cost: %.3f" % (
         method_str, skipped, (1-skipped) * len(queries)))
-
-

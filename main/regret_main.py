@@ -23,7 +23,17 @@ def run_regret(df, df_sample, out, args, k, queries):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Regret baseline.')
     parser.add_argument('--config', default="demo", help="Config File Path")
-    args = Args(parser.parse_args().config)
+    # MODIFICATION: Add argument for k
+    parser.add_argument('--k', type=int, default=None, help="Override partition count k")
+
+    parsed_args = parser.parse_args()
+    args = Args(parsed_args.config)
+    
+    # MODIFICATION: Override k globally if provided
+    if parsed_args.k is not None:
+        print(f"OVERRIDE: Changing k from {args.k} to {parsed_args.k}")
+        args.k = parsed_args.k
+
     # Fix the random seeds for our experiments
     np.random.seed(args.seed)
 
@@ -34,7 +44,10 @@ if __name__ == "__main__":
     total_size = 0
     total_movement = 0
     for i, fname in enumerate(fnames):
-        df, df_sample, k = get_data(config, args, parts, files[i], fname)
+        # MODIFICATION: Capture original k as dummy variable '_' to prevent overwriting
+        df, df_sample, _ = get_data(config, args, parts, files[i], fname)
+        k = args.k # Force usage of the overridden k
+        
         N = len(df)
         output_dir = "%s/%s-%s-%d-%d-%s" % (config["ds"], fname, args.q, args.interval, k, args.method)
         schedule, q, m = run_regret(df, df_sample, output_dir, args, k, queries)
@@ -46,5 +59,3 @@ if __name__ == "__main__":
             config["ds"], fname, args.q, k, args.method, args.alpha), "wb"))
     print("[Regret (%s,%d)] Query: %f, Movement: %f" % (
         args.policy, args.interval, total_query / total_size, total_movement / total_size))
-
-
