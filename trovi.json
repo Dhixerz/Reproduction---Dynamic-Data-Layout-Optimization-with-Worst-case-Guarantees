@@ -1,0 +1,25 @@
+{
+  "name": "Reproduction of Dynamic Data Layout Optimization with Worst-case Guarantees (OREO)",
+  "description": "Independent reproduction of the experiments from the paper 'Dynamic Data Layout Optimization with Worst-case Guarantees'.",
+  "authors": [
+    {
+      "name": "Dhian Juwita Putri",
+      "role": "Reproducer"
+    }
+  ],
+  "original_paper": {
+    "title": "Dynamic Data Layout Optimization with Worst-case Guarantees",
+    "authors": [
+      "Kexin Rong",
+      "Paul Liu",
+      "Sarah Ashok Sonje",
+      "Moses Charikar"
+    ],
+    "url": "https://arxiv.org/abs/2405.04984"
+  },
+  "tags": [
+    "experiment"
+  ],
+  "artifact_type": "reproduction"
+}
+
